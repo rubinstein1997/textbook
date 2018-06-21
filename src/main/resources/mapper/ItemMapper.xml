@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.wxc.book.mapper.ItemMapper">
+
+    <insert id="addItem" useGeneratedKeys="true" keyProperty="item_id">
+      INSERT INTO item (apply_id,bookname,press,major,book_number,student_number,message)
+                       VALUES
+                       (#{applyId},#{applyItem.bookName},#{applyItem.press},#{applyItem.major},#{applyItem.bookNumber},#{applyItem.studentNumber},#{applyItem.message});</insert>
+
+</mapper>

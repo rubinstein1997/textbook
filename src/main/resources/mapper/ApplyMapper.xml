@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.wxc.book.mapper.ApplyMapper">
+
+    <insert id="addApply" useGeneratedKeys="true" keyProperty="apply_id">
+      INSERT INTO apply (user_id,status)
+                       VALUES
+                       (#{user_id},#{status});</insert>
+
+
+    <!--<insert id="addUser" parameterType="User"-->
+            <!--useGeneratedKeys="true" keyProperty="id">-->
+        <!--insert into user(userName,userAge,userAddress)-->
+             <!--values(#{userName},#{userAge},#{userAddress})-->
+    <!--</insert>-->
+</mapper>

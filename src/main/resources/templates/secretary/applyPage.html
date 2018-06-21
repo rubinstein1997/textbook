@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/materialize/1.0.0-rc.1/css/materialize.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+    <script>
+        axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        window.http = axios;
+    </script>
+    <style>
+        ul.sidenav.sidenav-fixed li a {
+            font-size: 13px;
+            line-height: 44px;
+            height: 44px;
+            padding: 0 30px;
+        }
+
+        ul.sidenav.sidenav-fixed ul.collapsible-accordion .collapsible-body li a {
+            font-weight: 400;
+            padding: 0 38px 0 45px;
+        }
+
+        a.collapsible-header {
+            outline: none;
+        }
+
+        header, main, footer {
+            padding-left: 300px;
+        }
+
+        main {
+            margin-top: 50px;
+        }
+
+        form h5 {
+            margin: 25px 0;
+        }
+
+        form .select.mt20 {
+            margin-top: 20px;
+        }
+
+        .pd20 {
+            padding: 20px;
+        }
+
+        form {
+            padding: 12px;
+        }
+
+        @media only screen and (max-width: 992px) {
+            header, main, footer {
+                padding-left: 0;
+            }
+
+            .mt20 {
+                margin-top: 20px;
+            }
+
+            main {
+                padding-bottom: 20px;
+            }
+        }
+
+        @media only screen and (min-width: 993px) {
+
+            .container {
+                width: 90% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <nav id="header-nav" class="top-nav blue darken-1">
+        <div class="container">
+            <div class="nav-warpper">
+                <div class="row">
+                    <div class="col s2 l2">
+                        <a href="#" data-target="nav-mobile" class="top-nav sidenav-trigger full hide-on-large-only">
+                            <i class="material-icons">menu</i>
+                        </a>
+                    </div>
+
+                    <div class="col s5 offset-s5 l2 offset-l8">
+                        <div>欢迎您, 哈哈怪</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <ul id="nav-mobile" class="sidenav sidenav-fixed">
+        <li class="bold"><a href="/" class="waves-effect waves-teal" style="height: 64px; line-height: 64px">控制面板</a>
+        </li>
+        <li>
+            <hr>
+        </li>
+
+        <li class="bold"><a href="#" class="waves-effect waves-teal">申请</a></li>
+        <!-- <li class="bold"><a href="#" class="waves-effect waves-teal">专业</a></li>
+        <li class="bold"><a href="#" class="waves-effect waves-teal">班级</a></li>
+
+
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+                <li class="bold"><a class="collapsible-header waves-effect waves-teal" tabindex="0">学生</a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="#">查看所有</a></li>
+                            <li><a href="#">添加</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+
+        <li class="bold"><a href="#" class="waves-effect waves-teal">公寓</a></li>
+        <li class="bold"><a href="#" class="waves-effect waves-teal">寝室</a></li>
+        <li class="bold"><a href="#" class="waves-effect waves-teal">辅导员</a></li> -->
+    </ul>
+</header>
+
+    <main id="app">
+        <div class="container">
+            <form action="" method="post" @submit.prevent="onSubmit">
+
+                <h5>申请</h5>
+
+
+                <div class="row">
+                    <a href="javascript:void(0);" class="waves-effect waves-light btn" @click="addMore">添加更多</a>
+                </div>
+
+                <div class="row" v-for="(item, index) in items">
+                    <div class="input-field col m3">
+                        <input :id="'bookName' + index" :name="'bookName' + index" type="text" class="validate" required v-model="item.bookName">
+                        <label :for="'bookName' + index">书籍名</label>
+                        <span class="helper-text" data-error="" data-success=""></span>
+                    </div>
+
+                    <div class="input-field col m2">
+                        <input :id="'press' + index" :name="'press' + index" type="text" class="validate" required v-model="item.press">
+                        <label :for="'press' + index">出版社</label>
+                        <span class="helper-text" data-error="" data-success=""></span>
+                    </div>
+
+                    <div class="input-field col m2">
+                        <input :id="'major' + index" :name="'major' + index" type="text" class="validate" required v-model="item.major">
+                        <label :for="'major' + index">专业</label>
+                        <span class="helper-text" data-error="" data-success=""></span>
+                    </div>
+
+                    <div class="input-field col m1">
+                        <input :id="'student' + index" :name="'student' + index" type="text" pattern="\d+" class="validate" required v-model="item.student">
+                        <label :for="'student' + index">班级人数</label>
+                        <span class="helper-text" data-error="" data-success=""></span>
+                    </div>
+
+                    <div class="input-field col m1">
+                        <input :id="'number' + index" :name="'number' + index" type="text" pattern="\d+" class="validate" required v-model="item.number">
+                        <label :for="'number' + index">申请数</label>
+                        <span class="helper-text" data-error="" data-success=""></span>
+                    </div>
+
+                    <div class="input-field col m2" v-show="item.number != item.student">
+                        <textarea :id="'message' + index" :name="'message' + index" type="text" class="materialize-textarea" v-model="item.message"></textarea>
+                        <label :for="'message' + index">申请理由</label>
+                    </div>
+
+                    <div class="col m1" style="margin-top: 30px;" v-show="index != 0">
+                        <a href="javascript:void(0)" @click="delItem(index)" title="删除"><i class="material-icons red-text">remove_circle</i></a>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <button class="btn waves-effect waves-light blue darken-1" type="submit" name="action">提交
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="https://cdn.bootcss.com/materialize/1.0.0-rc.1/js/materialize.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                items: [
+                    {
+                        'bookName': '',
+                        'press': '',
+                        'major': '',
+                        'studentNumber': '',
+                        'bookNumber': '',
+                        'message': ''
+                    }
+                ]
+            },
+            mounted() {
+
+            },
+            methods: {
+                onSubmit() {
+                    http.post('/secretary/bookapply', this.items)
+                        .then(function (response) {
+                            window.M.toast({html: response.message})
+                            setTimeout(function () {
+                                window.location.href=window.location.href
+
+                            },2000)
+                        })
+                        .catch(function (e) {
+
+                        });
+                },
+                addMore() {
+                    this.items.push({
+                        'bookName': '',
+                        'press': '',
+                        'major': '',
+                        'student': '',
+                        'number': '',
+                        'message': ''
+                    });
+                },
+                delItem(index) {
+                    if (index > 0) this.items.splice(index, 1);
+                }
+            }
+        })
+    </script>
+    <script>
+        ;(function (w, d) {
+            // 侧边栏事件
+            d.addEventListener('DOMContentLoaded', function () {
+                var sidenav = d.querySelectorAll('.sidenav');
+                var collapsibleEle = d.querySelectorAll('.collapsible');
+                var selectEle = document.querySelectorAll('select');
+
+                window.M.Sidenav.init(sidenav);
+                window.M.Collapsible.init(collapsibleEle);
+                window.M.FormSelect.init(selectEle);
+
+                window.M.updateTextFields();
+            });
+        })(window, document);
+    </script>
+</body>
+</html>

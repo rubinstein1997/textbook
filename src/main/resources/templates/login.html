@@ -1,0 +1,69 @@
+<html>
+<link type="text/css" id="dark-mode" rel="stylesheet" href="">
+<style type="text/css" id="dark-mode-custom-style"></style>
+<html lang="zh-Hans" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>登入 - layuiAdmin</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="css/layui.css" media="all">
+
+
+</head>
+
+<body>
+
+<div class="layui-container">
+    <div style="height: 25%;"></div>
+
+    <div class="layui-col-md4 layui-col-md-offset4">
+        <div style="text-align: center; margin-bottom: 20px; font-size: 20px">
+            登录
+        </div>
+        <form class="layui-form" th:action="@{/login}" th:method="post">
+
+            <div class="layui-form-item">
+                <input type="text" name="id" id="LAY-user-login-username" lay-verify="required" placeholder="用户名"
+                       class="layui-input">
+            </div>
+
+            <div class="layui-form-item">
+                <input type="password" name="passwd" id="LAY-user-login-password" lay-verify="required" placeholder="密码"
+                       class="layui-input">
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择框</label>
+                <div class="layui-input-block">
+                    <select name="role" lay-verify="required">
+                        <option value=""></option>
+                        <option value="0">教学秘书</option>
+                        <option value="1">教材科</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="LAY-user-login-submit">登 入</button>
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+
+
+</div>
+
+<script src="js/layui.all.js"></script>
+<script>
+
+</script>
+
+
+</body>
+
+</html>
