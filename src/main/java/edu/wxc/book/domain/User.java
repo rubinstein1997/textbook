@@ -1,9 +1,11 @@
 package edu.wxc.book.domain;
 
-public class User {
-    private String user_id;
+import java.util.List;
 
-    private String username;
+public class User {
+    private String userId;
+
+    private String userName;
 
     private String passwd;
 
@@ -11,22 +13,22 @@ public class User {
 
     private Long telephone;
 
-    private String role;
+    private List<Role> roles;
 
-    public String getUser_id() {
-        return user_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPasswd() {
@@ -53,23 +55,23 @@ public class User {
         this.telephone = telephone;
     }
 
-    public String getRole() {
-        return role;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "user_id='" + user_id + '\'' +
-                ", username='" + username + '\'' +
+                "userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
                 ", passwd='" + passwd + '\'' +
-                ", secretary='" + academy + '\'' +
+                ", academy='" + academy + '\'' +
                 ", telephone=" + telephone +
-                ", role='" + role + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }

@@ -24,7 +24,7 @@ public class ApplyService {
 
     public void  bookApply(List<ApplyItem> applyItems, HttpSession httpSession) {
         User user  = (User) httpSession.getAttribute("user");
-        Integer userId = Integer.valueOf(user.getUser_id());
+        Integer userId = Integer.valueOf(user.getUserId());
         int apply_id =  applyMapper.addApply(userId,22);
         for(ApplyItem applyItem : applyItems) {
             itemMapper.addItem(apply_id,applyItem);
