@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface UserMapper {
-    User selectById(String id);
+    User selectById(Integer id);
 
     User selectByIdAndPasswd(
-            @Param("id") String id,
+            @Param("id") Integer id,
             @Param("passwd") String passwd);
 }

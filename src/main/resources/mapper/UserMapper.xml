@@ -12,6 +12,12 @@
 
 
     <select id="selectByIdAndPasswd" resultType="edu.wxc.book.domain.User">
-        select * from user where user_id = #{id} AND passwd = #{passwd}
+        select
+          user_id userId,
+          username,
+          passwd,
+          academy,
+          telephone
+         from user where user_id = #{id} AND passwd = #{passwd}
     </select>
 </mapper>

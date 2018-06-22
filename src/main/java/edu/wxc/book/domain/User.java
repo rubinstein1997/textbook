@@ -1,9 +1,9 @@
 package edu.wxc.book.domain;
 
 public class User {
-    private String user_id;
+    private Integer userId;
 
-    private String username;
+    private String userName;
 
     private String passwd;
 
@@ -13,20 +13,20 @@ public class User {
 
     private String role;
 
-    public String getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPasswd() {
@@ -64,10 +64,10 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "user_id='" + user_id + '\'' +
-                ", username='" + username + '\'' +
+                "userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
                 ", passwd='" + passwd + '\'' +
-                ", secretary='" + academy + '\'' +
+                ", academy='" + academy + '\'' +
                 ", telephone=" + telephone +
                 ", role='" + role + '\'' +
                 '}';

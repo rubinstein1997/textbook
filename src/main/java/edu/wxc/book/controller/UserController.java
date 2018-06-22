@@ -28,7 +28,7 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginForm(
-            @RequestParam("id") String id,
+            @RequestParam("id") Integer id,
             @RequestParam("passwd") String passwd,
             @RequestParam("role") String role,
             HttpSession httpSession,
@@ -40,6 +40,7 @@ public class UserController {
 
             case "0":
                 user = userService.login(id,passwd);
+                System.out.println(user);
                 user.setRole("secretary");
                 break;
             case "2":

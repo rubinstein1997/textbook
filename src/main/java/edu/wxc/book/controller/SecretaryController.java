@@ -1,6 +1,7 @@
 package edu.wxc.book.controller;
 
 import edu.wxc.book.domain.ApplyItem;
+import edu.wxc.book.domain.User;
 import edu.wxc.book.mapper.ApplyMapper;
 import edu.wxc.book.service.ApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,6 @@ public class SecretaryController {
     @ResponseBody
     @RequestMapping(value = "bookapply")
     public ResponseEntity bookApply(@RequestBody List<ApplyItem> applyItems, HttpSession httpSession) {
-
         applyService.bookApply(applyItems, httpSession);
         return new ResponseEntity(HttpStatus.OK);
     }

@@ -155,18 +155,18 @@
                     </div>
 
                     <div class="input-field col m1">
-                        <input :id="'student' + index" :name="'student' + index" type="text" pattern="\d+" class="validate" required v-model="item.student">
-                        <label :for="'student' + index">班级人数</label>
+                        <input :id="'studentNumber' + index" :name="'studentNumber' + index" type="text" pattern="\d+" class="validate" required v-model="item.studentNumber">
+                        <label :for="'studentNumber' + index">班级人数</label>
                         <span class="helper-text" data-error="" data-success=""></span>
                     </div>
 
                     <div class="input-field col m1">
-                        <input :id="'number' + index" :name="'number' + index" type="text" pattern="\d+" class="validate" required v-model="item.number">
-                        <label :for="'number' + index">申请数</label>
+                        <input :id="'bookNumber' + index" :name="'bookNumber' + index" type="text" pattern="\d+" class="validate" required v-model="item.bookNumber">
+                        <label :for="'bookNumber' + index">申请数</label>
                         <span class="helper-text" data-error="" data-success=""></span>
                     </div>
 
-                    <div class="input-field col m2" v-show="item.number != item.student">
+                    <div class="input-field col m2" v-show="item.bookNumber != item.studentNumber">
                         <textarea :id="'message' + index" :name="'message' + index" type="text" class="materialize-textarea" v-model="item.message"></textarea>
                         <label :for="'message' + index">申请理由</label>
                     </div>
@@ -226,8 +226,8 @@
                         'bookName': '',
                         'press': '',
                         'major': '',
-                        'student': '',
-                        'number': '',
+                        'studentNumber': '',
+                        'bookNumber': '',
                         'message': ''
                     });
                 },

@@ -14,11 +14,11 @@ public class UserService {
         this.UserMapper = UserMapper;
     }
 
-    public User selectById(String id) {
+    public User selectById(Integer id) {
         return UserMapper.selectById(id);
     }
 
-    public User login(String id, String passwd) {
+    public User login(Integer id, String passwd) {
         return UserMapper.selectByIdAndPasswd(id, passwd);
     }
 
