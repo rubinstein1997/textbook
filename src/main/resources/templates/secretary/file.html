@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/materialize/1.0.0-rc.1/css/materialize.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+    <script>
+        axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        window.http = axios;
+    </script>
+    <style>
+        ul.sidenav.sidenav-fixed li a {
+            font-size: 13px;
+            line-height: 44px;
+            height: 44px;
+            padding: 0 30px;
+        }
+
+        ul.sidenav.sidenav-fixed ul.collapsible-accordion .collapsible-body li a {
+            font-weight: 400;
+            padding: 0 38px 0 45px;
+        }
+
+        a.collapsible-header {
+            outline: none;
+        }
+
+        header, main, footer {
+            padding-left: 300px;
+        }
+
+        main {
+            margin-top: 50px;
+        }
+
+        form h5 {
+            margin: 25px 0;
+        }
+
+        form .select.mt20 {
+            margin-top: 20px;
+        }
+
+        .pd20 {
+            padding: 20px;
+        }
+
+        form {
+            padding: 12px;
+        }
+
+        @media only screen and (max-width: 992px) {
+            header, main, footer {
+                padding-left: 0;
+            }
+
+            .mt20 {
+                margin-top: 20px;
+            }
+
+            main {
+                padding-bottom: 20px;
+            }
+        }
+
+        @media only screen and (min-width: 993px) {
+
+            .container {
+                width: 90% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <nav id="header-nav" class="top-nav blue darken-1">
+        <div class="container">
+            <div class="nav-warpper">
+                <div class="row">
+                    <div class="col s2 l2">
+                        <a href="#" data-target="nav-mobile" class="top-nav sidenav-trigger full hide-on-large-only">
+                            <i class="material-icons">menu</i>
+                        </a>
+                    </div>
+
+                    <div class="col s5 offset-s5 l2 offset-l8">
+                        <div>欢迎您, 哈哈怪</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <ul id="nav-mobile" class="sidenav sidenav-fixed">
+        <li class="bold"><a href="/" class="waves-effect waves-teal" style="height: 64px; line-height: 64px">控制面板</a>
+        </li>
+        <li>
+            <hr>
+        </li>
+
+        <li class="bold"><a href="#" class="waves-effect waves-teal">申请</a></li>
+    </ul>
+</header>
+    <main id="app">
+        <div class="container">
+            <form action="/" method="post">
+                <h5>申请</h5>
+
+                <div class="row">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>从文件导入</span>
+                            <input type="file" accept=".xlsx, .xls, .csv">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="请选择文件">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <button class="btn waves-effect waves-light blue darken-1" type="submit" name="action">提交
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.bootcss.com/materialize/1.0.0-rc.1/js/materialize.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+    <script>
+        ;(function (w, d) {
+            // 侧边栏事件
+            d.addEventListener('DOMContentLoaded', function () {
+                var sidenav = d.querySelectorAll('.sidenav');
+                var collapsibleEle = d.querySelectorAll('.collapsible');
+                var selectEle = document.querySelectorAll('select');
+
+                window.M.Sidenav.init(sidenav);
+                window.M.Collapsible.init(collapsibleEle);
+                window.M.FormSelect.init(selectEle);
+
+                window.M.updateTextFields();
+            });
+        })(window, document);
+    </script>
+</body>
+</html>

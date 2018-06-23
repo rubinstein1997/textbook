@@ -23,6 +23,11 @@ public class SecretaryController {
     @Autowired
     ApplyService applyService;
 
+    @RequestMapping("main")
+    public String main() {
+        return "/secretary/main";
+    }
+
     @RequestMapping(value = "applypage", method = RequestMethod.GET)
     public String applyPage() {
         return "/secretary/applyPage";
