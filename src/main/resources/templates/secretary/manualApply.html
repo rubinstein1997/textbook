@@ -100,8 +100,18 @@
             <hr>
         </li>
 
-        <li class="bold"><a href="#" class="waves-effect waves-teal">申请</a></li>
-        <!-- <li class="bold"><a href="#" class="waves-effect waves-teal">专业</a></li>
+        <li class="bold">
+            <ul class="collapsible collapsible-accordion">
+                <li class="bold"><a class="collapsible-header waves-effect waves-teal" tabindex="0">申请</a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="/secretary/manualApply">手动添加</a></li>
+                            <li><a href="/secretary/excelApply">excel添加</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>        <!-- <li class="bold"><a href="#" class="waves-effect waves-teal">专业</a></li>
         <li class="bold"><a href="#" class="waves-effect waves-teal">班级</a></li>
 
 
@@ -209,7 +219,7 @@
             },
             methods: {
                 onSubmit() {
-                    http.post('/secretary/bookapply', this.items)
+                    http.post('/secretary/manualApplyPost', this.items)
                         .then(function (response) {
                             window.M.toast({html: response.message})
                             setTimeout(function () {

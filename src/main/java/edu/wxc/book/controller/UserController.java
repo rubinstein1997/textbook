@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginForm(
+    public String loginPost(
             @RequestParam("id") Integer id,
             @RequestParam("passwd") String passwd,
             @RequestParam("role") String role,
@@ -52,7 +52,7 @@ public class UserController {
 
         if(user != null) {
             httpSession.setAttribute("user",user);
-            return "redirect:/" + user.getRole() + "/applypage";
+            return "redirect:/" + user.getRole() + "/main";
         } else {
             model.addAttribute("message", "登录名或密码输入错误");
             return "forward:/login";

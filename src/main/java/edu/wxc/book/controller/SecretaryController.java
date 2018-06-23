@@ -28,16 +28,26 @@ public class SecretaryController {
         return "/secretary/main";
     }
 
-    @RequestMapping(value = "applypage", method = RequestMethod.GET)
-    public String applyPage() {
-        return "/secretary/applyPage";
+    @RequestMapping(value = "manualApply", method = RequestMethod.GET)
+    public String manualApply() {
+        return "/secretary/manualApply";
+    }
+
+    @RequestMapping(value = "excelApply", method = RequestMethod.GET)
+    public String excelApply() {
+        return "/secretary/excelApply";
     }
 
     @ResponseBody
-    @RequestMapping(value = "bookapply")
-    public ResponseEntity bookApply(@RequestBody List<ApplyItem> applyItems, HttpSession httpSession) {
+    @RequestMapping(value = "manualApplyPost")
+    public ResponseEntity manualApplyPost(@RequestBody List<ApplyItem> applyItems, HttpSession httpSession) {
         applyService.bookApply(applyItems, httpSession);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "excelApplyPost")
+    public void excelApplyPost() {
+
     }
 
 }
