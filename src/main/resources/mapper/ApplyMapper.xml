@@ -6,9 +6,9 @@
 <mapper namespace="edu.wxc.book.mapper.ApplyMapper">
 
     <insert id="addApply" useGeneratedKeys="true" keyProperty="apply_id">
-      INSERT INTO apply (user_id,status)
+      INSERT INTO apply (user_id,status,time)
                        VALUES
-                       (#{user_id},#{status});</insert>
+                       (#{user_id},#{status},#{timestamp});</insert>
 
 
     <!--<insert id="addUser" parameterType="User"-->

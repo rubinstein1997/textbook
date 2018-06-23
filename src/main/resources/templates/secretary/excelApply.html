@@ -116,14 +116,14 @@
 </header>
     <main id="app">
         <div class="container">
-            <form action="/" method="post">
+            <form action="/secretary/excelApplyPost" method="post" enctype="multipart/form-data">
                 <h5>申请</h5>
 
                 <div class="row">
                     <div class="file-field input-field">
                         <div class="btn">
                             <span>从文件导入</span>
-                            <input type="file" accept=".xlsx, .xls, .csv">
+                            <input type="file" name="file" accept=".xlsx, .xls, .csv">
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text" placeholder="请选择文件">
@@ -136,7 +136,9 @@
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
+            </form>
         </div>
+
     </main>
 
     <script src="https://cdn.bootcss.com/materialize/1.0.0-rc.1/js/materialize.min.js"></script>

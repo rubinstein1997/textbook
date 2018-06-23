@@ -13,6 +13,10 @@ public class User {
 
     private String role;
 
+    public User(Integer userId) {
+        this.userId = userId;
+    }
+
     public Integer getUserId() {
         return userId;
     }

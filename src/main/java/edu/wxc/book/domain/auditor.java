@@ -1,7 +1,7 @@
 package edu.wxc.book.domain;
 
-public class auditor extends User{
-    private String id;
+public class auditor {
+    private Integer id;
 
     private String name;
 
