@@ -1,6 +1,6 @@
 package edu.wxc.book.controller;
 
-import edu.wxc.book.domain.ApplyItem;
+import edu.wxc.book.domain.Item;
 import edu.wxc.book.domain.User;
 import edu.wxc.book.service.ApplyService;
 import edu.wxc.book.service.ExcelService;
@@ -45,17 +45,23 @@ public class SecretaryController {
 
     @ResponseBody
     @RequestMapping(value = "manualApplyPost")
-    public ResponseEntity manualApplyPost(@RequestBody List<ApplyItem> applyItems, HttpSession httpSession) {
-        applyService.bookApply(applyItems, httpSession);
+    public ResponseEntity manualApplyPost(@RequestBody List<Item> items, HttpSession httpSession) {
+        applyService.bookApply(items, httpSession);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(value = "excelApplyPost")
     public String excelApplyPost(@RequestParam("file") MultipartFile file, HttpSession httpSession)
             throws IOException {
-        User user = new User(2);
+
+        User user = (User) httpSession.getAttribute("user");;
         excelService.handleExcelApply(file,user);
         return "/secretary/excelApply";
+    }
+
+    @GetMapping("applyStatus")
+    public String applyStatus() {
+        return "/secretary/applyStatus";
     }
 
 }

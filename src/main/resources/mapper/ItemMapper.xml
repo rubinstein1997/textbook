@@ -6,8 +6,20 @@
 <mapper namespace="edu.wxc.book.mapper.ItemMapper">
 
     <insert id="addItem" useGeneratedKeys="true" keyProperty="item_id">
-      INSERT INTO item (apply_id,bookname,press,major,book_number,student_number,message)
+      INSERT INTO item (apply_id, course_title,
+                        isbn, book_name,
+                        author, press,
+                        publish_time, book_category,
+                        major_grade, student_number,
+                        teacher_book, total_number,
+                        remark)
                        VALUES
-                       (#{applyId},#{applyItem.bookName},#{applyItem.press},#{applyItem.major},#{applyItem.bookNumber},#{applyItem.studentNumber},#{applyItem.message});</insert>
+                       (#{applyId},#{item.courseTitle},
+                       #{item.isbn},#{item.bookName},
+                       #{item.author},#{item.press},
+                       #{item.publishTime},#{item.bookCategory},
+                       #{item.majorGrade},#{item.studentNumber},
+                       #{item.teacherBook},#{item.totalNumber},
+                       #{item.remark})</insert>
 
 </mapper>

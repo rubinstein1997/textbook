@@ -10,7 +10,10 @@
                        VALUES
                        (#{user_id},#{status},#{timestamp});</insert>
 
-
+    <insert id="testApply" parameterType="edu.wxc.book.domain.Apply" useGeneratedKeys="true" keyProperty="applyId">
+      INSERT INTO apply (user_id,status,time)
+                       VALUES
+                       (#{userId},#{status},#{time});</insert>
     <!--<insert id="addUser" parameterType="User"-->
             <!--useGeneratedKeys="true" keyProperty="id">-->
         <!--insert into user(userName,userAge,userAddress)-->

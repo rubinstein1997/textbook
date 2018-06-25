@@ -1,6 +1,6 @@
 package edu.wxc.book.service;
 
-import edu.wxc.book.domain.ApplyItem;
+import edu.wxc.book.domain.Item;
 import edu.wxc.book.domain.User;
 import edu.wxc.book.mapper.ApplyMapper;
 import edu.wxc.book.mapper.ItemMapper;
@@ -29,14 +29,13 @@ public class ApplyService {
     }
 
 
-    public void  bookApply(List<ApplyItem> applyItems, HttpSession httpSession) {
-        User user = new User(1);
+    public void  bookApply(List<Item> items, HttpSession httpSession) {
         //正式需要取消注释
-//        User user  = (User) httpSession.getAttribute("user");
-//        int userId = user.getUserId();
+        User user  = (User) httpSession.getAttribute("user");
+        int userId = user.getUserId();
         int apply_id =  applyMapper.addApply(user.getUserId(),22,new Timestamp(new Date().getTime()));
-        for(ApplyItem applyItem : applyItems) {
-            itemMapper.addItem(apply_id,applyItem);
+        for(Item item: items) {
+            itemMapper.addItem(apply_id, item);
         }
     }
 

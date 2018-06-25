@@ -20,4 +20,5 @@
           telephone
          from user where user_id = #{id} AND passwd = #{passwd}
     </select>
+
 </mapper>
