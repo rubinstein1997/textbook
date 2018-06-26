@@ -41,7 +41,7 @@ public class ExcelService {
 
         //插入apply表，获取apply_id
         Apply apply = new Apply(null,user.getUserId(),0,null,new Timestamp(new Date().getTime()));
-        applyMapper.testApply(apply);
+        applyMapper.addApply(apply);
 
         DataFormatter fomat = new DataFormatter();
         if (!file.isEmpty()) {
@@ -97,13 +97,13 @@ public class ExcelService {
                                 item.setMajorGrade(value);
                                 break;
                             case 8:
-                                item.setStudentNumber(Integer.valueOf(value));
+                                item.setStudentNumber(value);
                                 break;
                             case 9:
                                 item.setTeacherBook(value);
                                 break;
                             case 10:
-                                item.setTotalNumber(Integer.valueOf(value));
+                                item.setTotalNumber(value);
                                 break;
                             case 11:
                                 item.setRemark(value);

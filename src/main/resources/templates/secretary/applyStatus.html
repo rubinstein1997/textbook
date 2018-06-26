@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
@@ -100,9 +100,7 @@
     <ul id="nav-mobile" class="sidenav sidenav-fixed">
         <li class="bold"><a href="/" class="waves-effect waves-teal" style="height: 64px; line-height: 64px">控制面板</a>
         </li>
-        <li>
-            <hr>
-        </li>
+
 
         <li class="bold">
             <ul class="collapsible collapsible-accordion">
@@ -128,10 +126,18 @@
                           <th>时间</th>
                           <th>操作</th>
                           <th>状态</th>
+
                       </tr>
                     </thead>
 
                     <tbody>
+                        <tr th:each="apply : ${applies.list}">
+                            <td>[[${apply.applyId}]]</td>
+                            <td>[[${apply.time}]]</td>
+                            <td>[[${apply.status}]]</td>
+                            <td>[[${apply.applyId}]]</td>
+
+                        </tr>
                       <tr>
                         <td>1</td>
                         <td>2018-09-01 12:11:20</td>
@@ -164,6 +170,9 @@
                       </tr>
                     </tbody>
                   </table>
+            <div class="col s12">
+                <ul th:replace="fragments :: navigate(${applies}, '')"></ul>
+            </div>
         </div>
 
     <div id="modal" class="modal modal-fixed-footer">
@@ -234,11 +243,14 @@
             },
             methods: {
                 show(id) {
-                    http.get('/url')
-                        .then(function (response) {
-                            this.items = response.data.data;
+                    var that = this;
 
-                            this.instance.open();
+                    http.get('applyItems/'+ id)
+                        .then(function (response) {
+                            that.items = response.data.data;
+
+                            that.instance.open();
+
                         })
                         .catch(function (e) {
 
