@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/materialize/1.0.0-rc.1/css/materialize.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+    <script>
+        axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        window.http = axios;
+    </script>
+    <style>
+        ul.sidenav.sidenav-fixed li a {
+            font-size: 13px;
+            line-height: 44px;
+            height: 44px;
+            padding: 0 30px;
+        }
+
+        ul.sidenav.sidenav-fixed ul.collapsible-accordion .collapsible-body li a {
+            font-weight: 400;
+            padding: 0 38px 0 45px;
+        }
+
+        a.collapsible-header {
+            outline: none;
+        }
+
+        header, main, footer {
+            padding-left: 300px;
+        }
+
+        main {
+            margin-top: 50px;
+        }
+
+        form h5 {
+            margin: 25px 0;
+        }
+
+        form .select.mt20 {
+            margin-top: 20px;
+        }
+
+        .pd20 {
+            padding: 20px;
+        }
+
+        form {
+            padding: 12px;
+        }
+
+        .modal {
+            width: 80%;
+        }
+
+        @media only screen and (max-width: 992px) {
+            header, main, footer {
+                padding-left: 0;
+            }
+
+            .mt20 {
+                margin-top: 20px;
+            }
+
+            main {
+                padding-bottom: 20px;
+            }
+        }
+
+        @media only screen and (min-width: 993px) {
+
+            .container {
+                width: 90% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <nav id="header-nav" class="top-nav blue darken-1">
+        <div class="container">
+            <div class="nav-warpper">
+                <div class="row">
+                    <div class="col s2 l2">
+                        <a href="#" data-target="nav-mobile" class="top-nav sidenav-trigger full hide-on-large-only">
+                            <i class="material-icons">menu</i>
+                        </a>
+                    </div>
+
+                    <div class="col s5 offset-s5 l2 offset-l8">
+                        <div>欢迎您, 哈哈怪</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <ul id="nav-mobile" class="sidenav sidenav-fixed">
+        <li class="bold"><a href="/" class="waves-effect waves-teal" style="height: 64px; line-height: 64px">控制面板</a>
+        </li>
+
+
+        <li class="bold">
+            <ul class="collapsible collapsible-accordion">
+                <li class="bold"><a class="collapsible-header waves-effect waves-teal" tabindex="0">申请</a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="/secretary/manualApply">手动添加</a></li>
+                            <li><a href="/secretary/excelApply">excel添加</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="bold"><a href="/secretary/applyStatus" class="waves-effect waves-teal">申请状态</a></li>
+    </ul>
+</header>
+    <main id="app">
+        <div class="container">
+            <table class="highlight responsive-table">
+                    <thead>
+                      <tr>
+                          <th>ID</th>
+                          <th>时间</th>
+                          <th>操作</th>
+                          <th>状态</th>
+
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="apply : ${applies.list}">
+                            <td>[[${apply.applyId}]]</td>
+                            <td>[[${apply.time}]]</td>
+                            <td>[[${apply.status}]]</td>
+                            <td>[[${apply.applyId}]]</td>
+
+                        </tr>
+                      <tr>
+                        <td>1</td>
+                        <td>2018-09-01 12:11:20</td>
+                        <td>
+                            <a href="javascript:void(0);" @click="show(1)">查看</a>
+                        </td>
+                        <td>
+                            <button class="btn green">通过</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>2017-09-09 12:11:20</td>
+                        <td>
+                            <a href="javascript:void(0);" @click="show(2)">查看</a>
+                        </td>
+                        <td>
+                            <button class="btn red">拒绝</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>2018-09-09 12:11:20</td>
+                        <td>
+                            <a href="javascript:void(0);" @click="show(3)">查看</a>
+                        </td>
+                        <td>
+                            <button class="btn blue">等待</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            <div class="col s12">
+                <ul th:replace="fragments :: navigate(${applies}, '')"></ul>
+            </div>
+        </div>
+
+    <div id="modal" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>查看</h4>
+        <table>
+        <thead>
+          <tr>
+              <th>课程名</th>
+              <th>ISBN</th>
+              <th>教材名称</th>
+              <th>作者</th>
+              <th>出版社</th>
+              <th>出版时间</th>
+              <th>教材类别</th>
+              <th>专业/年级</th>
+              <th>学生数</th>
+              <th>教本</th>
+              <th>合计总数</th>
+              <th>备注</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="(item, index) in items">
+            <td>{{ item.courseTitle }}</td>
+            <td>{{ item.isbn }}</td>
+            <td>{{ item.bookName }}</td>
+            <td>{{ item.author }}</td>
+            <td>{{ item.press }}</td>
+            <td>{{ item.publishTime }}</td>
+            <td>{{ item.bookCategory }}</td>
+            <td>{{ item.majorGrade }}</td>
+            <td>{{ item.studentNumber }}</td>
+            <td>{{ item.teacherBook }}</td>
+            <td>{{ item.totalNumber }}</td>
+            <td>{{ item.remark }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0);" class="waves-effect waves-green btn-flat green white-text" @click="action('pass')">通过</a>
+            <a href="javascript:void(0);" class="waves-effect waves-green btn-flat red white-text" @click="action('refuse')">拒绝</a>
+            <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="reason" class="materialize-textarea" placeholder="拒绝时请填写理由" v-model="reason"></textarea>
+                  <label for="reason">请填写理由</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+
+    <script src="https://cdn.bootcss.com/materialize/1.0.0-rc.1/js/materialize.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                instance: null,
+                items: [],
+                reason: '',
+            },
+            mounted() {
+                this.instance = window.M.Modal.init(document.querySelector('#modal'));
+            },
+            methods: {
+                show(id) {
+                    var that = this;
+
+                    http.get('applyItems/'+ id)
+                        .then(function (response) {
+                            that.items = response.data.data;
+
+                            that.instance.open();
+
+                        })
+                        .catch(function (e) {
+
+                        })
+                },
+                action(type) {
+                    // 通过
+                    if (type === 'pass') {
+                        // 通过之后的操作
+                        http.post('')
+                            .then(function (response) {
+
+                            })
+                            .catch(function (e) {
+
+                            })
+
+                        this.instance.close();
+                        return;
+                    }
+
+                    // 拒绝
+                    // 理由为空时
+                    if (this.reason === '') {
+                        document.querySelector('#reason').focus();
+                        return;
+                    }
+
+                    // 填写理由之后的操作
+                    http.post('')
+                        .then(function (response) {
+
+                        })
+                        .catch(function (e) {
+
+                        })
+
+                    this.instance.close();
+                }
+            }
+        })
+    </script>
+    <script>
+        ;(function (w, d) {
+            // 侧边栏事件
+            d.addEventListener('DOMContentLoaded', function () {
+                var sidenav = d.querySelectorAll('.sidenav');
+                var collapsibleEle = d.querySelectorAll('.collapsible');
+                var selectEle = d.querySelectorAll('select');
+
+                window.M.Sidenav.init(sidenav);
+                window.M.Collapsible.init(collapsibleEle);
+                window.M.FormSelect.init(selectEle);
+                window.M.updateTextFields();
+            });
+        })(window, document);
+    </script>
+</body>
+</html>

@@ -1,27 +1,36 @@
 package edu.wxc.book.controller;
 
-import edu.wxc.book.domain.ApplyItem;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import edu.wxc.book.domain.Item;
+import edu.wxc.book.domain.JsonData;
 import edu.wxc.book.domain.User;
-import edu.wxc.book.mapper.ApplyMapper;
-import edu.wxc.book.service.ApplyService;
+import edu.wxc.book.service.SecretaryApplyService;
+import edu.wxc.book.service.ExcelService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/secretary")
 public class SecretaryController {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
-    ApplyService applyService;
+    SecretaryApplyService applyService;
+
+    @Autowired
+    ExcelService excelService;
 
     @RequestMapping("main")
     public String main() {
@@ -40,14 +49,50 @@ public class SecretaryController {
 
     @ResponseBody
     @RequestMapping(value = "manualApplyPost")
-    public ResponseEntity manualApplyPost(@RequestBody List<ApplyItem> applyItems, HttpSession httpSession) {
-        applyService.bookApply(applyItems, httpSession);
+    public ResponseEntity manualApplyPost(@RequestBody List<Item> items, HttpSession httpSession) {
+        applyService.bookApply(items, httpSession);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(value = "excelApplyPost")
-    public void excelApplyPost() {
+    public String excelApplyPost(@RequestParam("file") MultipartFile file, HttpSession httpSession)
+            throws IOException {
 
+        User user = (User) httpSession.getAttribute("user");
+        excelService.handleExcelApply(file,user);
+        return "/secretary/excelApply";
     }
 
+    @GetMapping("applyStatus")
+    public String applyStatus(@RequestParam(value = "page",defaultValue = "1") int page,
+                              @RequestParam(value = "size" ,defaultValue = "10") int size,
+                              ModelMap modelMap, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        PageHelper.startPage(page,size);
+
+        modelMap.addAttribute("applies",new PageInfo<>(applyService.applyStatus(user.getUserId())));
+
+        return "/secretary/applyStatus";
+    }
+
+    @ResponseBody
+    @GetMapping("applyItems/{id}")
+    public JsonData applyItems(@PathVariable("id") Integer id, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        JsonData jsonData = new JsonData(0,applyService.getItemsByApplyId(id),"ok");
+        return jsonData;
+//        logger.info("{} verify if ajax has cookie {}",id,user);
+    }
+
+
+//    @ResponseBody
+//    @GetMapping("test")
+//    public Object test(ModelMap modelMap)  {
+////        modelMap.addAttribute("")
+//
+//
+////        PageInfo<Item> item = ;
+//////        modelMap.addAttribute("items",item);
+////        return item;
+//    }
 }
