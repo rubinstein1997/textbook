@@ -8,12 +8,15 @@ import edu.wxc.book.domain.JsonData;
 import edu.wxc.book.domain.User;
 import edu.wxc.book.service.SecretaryApplyService;
 import edu.wxc.book.service.ExcelService;
+import edu.wxc.book.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +39,9 @@ public class SecretaryController {
 
     @Autowired
     private ExcelService excelService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private StringRedisTemplate redisTpl;
@@ -62,40 +68,39 @@ public class SecretaryController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @ResponseBody
+    @RequestMapping("/me")
+    public Object me(@AuthenticationPrincipal UserDetails user) {
+        return user;
+    }
+
     @RequestMapping(value = "excelApplyPost")
-    public String excelApplyPost(@RequestParam("file") MultipartFile file, HttpSession httpSession)
+    public String excelApplyPost(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal UserDetails userDetail)
             throws IOException {
 
-        User user = (User) httpSession.getAttribute("user");
-        excelService.handleExcelApply(file,user);
+        String userName = userDetail.getUsername();
+        excelService.handleExcelApply(file,userName);
         return "/secretary/excelApply";
     }
 
     @GetMapping("applyStatus")
     public String applyStatus(@RequestParam(value = "page",defaultValue = "1") int page,
                               @RequestParam(value = "size" ,defaultValue = "10") int size,
-                              ModelMap modelMap, HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute("user");
-        logger.info("session: {}",user);
+                              @AuthenticationPrincipal UserDetails userDetail,
+                              ModelMap modelMap) {
+        logger.info("session: {}",userDetail);
         PageHelper.startPage(page,size);
-        modelMap.addAttribute("user",user);
-        modelMap.addAttribute("applies",new PageInfo<>(applyService.applyStatus(user.getUserId())));
+        modelMap.addAttribute("user", userService.selectById(userDetail.getUsername()));
+        modelMap.addAttribute("applies",new PageInfo<>(applyService.applyStatus(Integer.valueOf(userDetail.getUsername()))));
         return "/secretary/applyStatus";
     }
 
     @ResponseBody
     @GetMapping("applyItems/{id}")
-    public JsonData applyItems(@PathVariable("id") Integer id, HttpSession httpSession) {
+    public JsonData applyItems(@PathVariable("id") Integer id,
+                               @AuthenticationPrincipal UserDetails userDetail) {
         return  new JsonData(0,applyService.getItemsByApplyId(id),"ok");
 
     }
-
-
-//    @ResponseBody
-//    @GetMapping("test")
-//    public void test() {
-//
-//        redisTpl.ops
-//    }
 
 }
