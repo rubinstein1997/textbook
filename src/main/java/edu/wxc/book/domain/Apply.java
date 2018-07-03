@@ -1,5 +1,8 @@
 package edu.wxc.book.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Apply {
@@ -46,6 +49,8 @@ public class Apply {
      *
      * @mbg.generated Mon Jun 25 19:46:01 CST 2018
      */
+    @JsonFormat(pattern = "yyy-MM-dd hh:mm:ss", locale = "zh", timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date time;
 
     public Apply(Integer applyId, Integer userId, Integer status, String message, Date time) {

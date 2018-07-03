@@ -40,6 +40,7 @@ public class ExcelService {
     public void handleExcelApply(MultipartFile file, User user) throws IOException {
 
         //插入apply表，获取apply_id
+        //status表示等待中
         Apply apply = new Apply(null,user.getUserId(),0,null,new Timestamp(new Date().getTime()));
         applyMapper.addApply(apply);
 

@@ -90,7 +90,7 @@
                     </div>
 
                     <div class="col s5 offset-s5 l2 offset-l8">
-                        <div>欢迎您, 哈哈怪</div>
+                        <div>[[${user.userName}]]</div>
                     </div>
                 </div>
             </div>
@@ -133,41 +133,22 @@
                     <tbody>
                         <tr th:each="apply : ${applies.list}">
                             <td>[[${apply.applyId}]]</td>
-                            <td>[[${apply.time}]]</td>
-                            <td>[[${apply.status}]]</td>
-                            <td>[[${apply.applyId}]]</td>
+                            <td th:text="${#dates.format(apply.time,'yyy-MM-dd hh:mm:ss')}"></td>
+                            <td><a href="javascript:void(0);" data-th-@click="'show('+${apply.applyId}+')'">查看</a></td>
+
+                            <td th:switch="${apply.status}">
+                                <button th:case="'0'"class="btn blue">等待</button>
+                                <!--<div th:case="'22'"><button class="btn green">通dd过</button></div>-->
+                                <button th:case="'1'" class="btn green">通过</button>
+                                <button th:case="'2'" class="btn red">拒绝</button>
+
+                            </td>
+
+
 
                         </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>2018-09-01 12:11:20</td>
-                        <td>
-                            <a href="javascript:void(0);" @click="show(1)">查看</a>
-                        </td>
-                        <td>
-                            <button class="btn green">通过</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>2017-09-09 12:11:20</td>
-                        <td>
-                            <a href="javascript:void(0);" @click="show(2)">查看</a>
-                        </td>
-                        <td>
-                            <button class="btn red">拒绝</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>2018-09-09 12:11:20</td>
-                        <td>
-                            <a href="javascript:void(0);" @click="show(3)">查看</a>
-                        </td>
-                        <td>
-                            <button class="btn blue">等待</button>
-                        </td>
-                      </tr>
+
+
                     </tbody>
                   </table>
             <div class="col s12">

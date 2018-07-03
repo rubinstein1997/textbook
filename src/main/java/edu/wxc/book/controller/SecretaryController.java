@@ -2,6 +2,7 @@ package edu.wxc.book.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import edu.wxc.book.domain.Apply;
 import edu.wxc.book.domain.Item;
 import edu.wxc.book.domain.JsonData;
 import edu.wxc.book.domain.User;
@@ -10,6 +11,7 @@ import edu.wxc.book.service.ExcelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author:liuyunlong
+ */
 @Controller
 @RequestMapping("/secretary")
 public class SecretaryController {
@@ -27,10 +32,13 @@ public class SecretaryController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    SecretaryApplyService applyService;
+    private SecretaryApplyService applyService;
 
     @Autowired
-    ExcelService excelService;
+    private ExcelService excelService;
+
+    @Autowired
+    private StringRedisTemplate redisTpl;
 
     @RequestMapping("main")
     public String main() {
@@ -68,31 +76,26 @@ public class SecretaryController {
                               @RequestParam(value = "size" ,defaultValue = "10") int size,
                               ModelMap modelMap, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
+        logger.info("session: {}",user);
         PageHelper.startPage(page,size);
-
+        modelMap.addAttribute("user",user);
         modelMap.addAttribute("applies",new PageInfo<>(applyService.applyStatus(user.getUserId())));
-
         return "/secretary/applyStatus";
     }
 
     @ResponseBody
     @GetMapping("applyItems/{id}")
     public JsonData applyItems(@PathVariable("id") Integer id, HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute("user");
-        JsonData jsonData = new JsonData(0,applyService.getItemsByApplyId(id),"ok");
-        return jsonData;
-//        logger.info("{} verify if ajax has cookie {}",id,user);
+        return  new JsonData(0,applyService.getItemsByApplyId(id),"ok");
+
     }
 
 
 //    @ResponseBody
 //    @GetMapping("test")
-//    public Object test(ModelMap modelMap)  {
-////        modelMap.addAttribute("")
+//    public void test() {
 //
-//
-////        PageInfo<Item> item = ;
-//////        modelMap.addAttribute("items",item);
-////        return item;
+//        redisTpl.ops
 //    }
+
 }
