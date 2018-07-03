@@ -10,6 +10,12 @@
     <!--</resultMap>-->
 
 
+    <select id="selectById" resultType="edu.wxc.book.domain.User">
+        select
+         user_id userId,
+         passwd passwd
+         from user where user_id = #{id}
+    </select>
 
     <select id="selectByIdAndPasswd" resultType="edu.wxc.book.domain.User">
         select * from user where user_id = #{id} AND passwd = #{passwd}

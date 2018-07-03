@@ -6,6 +6,9 @@ import edu.wxc.book.service.ApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +36,13 @@ public class SecretaryController {
 
         applyService.bookApply(applyItems, httpSession);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @RequestMapping("/me")
+    public Object me(@AuthenticationPrincipal UserDetails user) {
+        return user;
+
     }
 
 }

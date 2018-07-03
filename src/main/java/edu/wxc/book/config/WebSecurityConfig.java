@@ -11,37 +11,42 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
 
 
     @Autowired
     UserService userService;
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
-    }
 
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                    .authorizeRequests()
-                        .antMatchers("/css/**","/js/**","/fonts/**","/index").permitAll()
-                        .antMatchers("/secretary/**").hasRole("secretary")
-                        .antMatchers("/auditor/**").hasRole("auditor")
-                        .and()
                     .formLogin()
-                        .loginPage("/login").failureUrl("/login")
-                        .and()
-                    .exceptionHandling().accessDeniedPage("/403")
-                        .and()
-                    .logout().logoutSuccessUrl("/login");
+                        .loginPage("/login")
+                    .and()
+                    .authorizeRequests()
+                    .antMatchers("/css/**","/js/**","/fonts/**","/login").permitAll()
+                    .antMatchers("/secretary/**").hasRole("secretary")
+                    .antMatchers("/auditor/**").hasRole("auditor")
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .csrf().disable();
+    }
 
+
+
+    @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
