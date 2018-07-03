@@ -2,12 +2,11 @@ package edu.wxc.book.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import edu.wxc.book.domain.Apply;
 import edu.wxc.book.domain.Item;
 import edu.wxc.book.domain.JsonData;
 import edu.wxc.book.domain.User;
-import edu.wxc.book.service.SecretaryApplyService;
 import edu.wxc.book.service.ExcelService;
+import edu.wxc.book.service.SecretaryApplyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +17,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
 /**
- * @author:liuyunlong
+ * \* User: root
+ * \* Date: 2018/7/3
+ * \* Time: 15:00
+ * \
  */
-@Controller
-@RequestMapping("/secretary")
-public class SecretaryController {
 
+@Controller
+@RequestMapping("/auditor")
+public class AuditorController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
@@ -89,13 +92,4 @@ public class SecretaryController {
         return  new JsonData(0,applyService.getItemsByApplyId(id),"ok");
 
     }
-
-
-//    @ResponseBody
-//    @GetMapping("test")
-//    public void test() {
-//
-//        redisTpl.ops
-//    }
-
 }
