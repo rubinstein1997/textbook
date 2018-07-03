@@ -5,11 +5,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.wxc.book.mapper.UserMapper">
 
-    <!--<resultMap id="adminResultMap" type="com.wxc.edu.lab.domain.Admin">-->
-    <!--<id property=""></id>-->
-    <!--</resultMap>-->
-
-
+    <select id="selectById" resultType="edu.wxc.book.domain.User">
+        select
+          user_id userId,
+          username,
+          passwd,
+          academy,
+          role,
+          telephone
+         from user where user_id = #{id}
+    </select>
 
     <select id="selectByIdAndPasswd" resultType="edu.wxc.book.domain.User">
         select

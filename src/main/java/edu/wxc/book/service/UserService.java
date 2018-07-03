@@ -14,7 +14,7 @@ public class UserService {
         this.UserMapper = UserMapper;
     }
 
-    public User selectById(Integer id) {
+    public User selectById(String id) {
         return UserMapper.selectById(id);
     }
 

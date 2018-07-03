@@ -34,62 +34,8 @@ import java.util.List;
 public class AuditorController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    private SecretaryApplyService applyService;
-
-    @Autowired
-    private ExcelService excelService;
-
-    @Autowired
-    private StringRedisTemplate redisTpl;
-
-    @RequestMapping("main")
-    public String main() {
-        return "/secretary/main";
-    }
-
-    @RequestMapping(value = "manualApply", method = RequestMethod.GET)
-    public String manualApply() {
-        return "/secretary/manualApply";
-    }
-
-    @RequestMapping(value = "excelApply", method = RequestMethod.GET)
-    public String excelApply() {
-        return "/secretary/excelApply";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "manualApplyPost")
-    public ResponseEntity manualApplyPost(@RequestBody List<Item> items, HttpSession httpSession) {
-        applyService.bookApply(items, httpSession);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "excelApplyPost")
-    public String excelApplyPost(@RequestParam("file") MultipartFile file, HttpSession httpSession)
-            throws IOException {
-
-        User user = (User) httpSession.getAttribute("user");
-        excelService.handleExcelApply(file,user);
-        return "/secretary/excelApply";
-    }
-
-    @GetMapping("applyStatus")
-    public String applyStatus(@RequestParam(value = "page",defaultValue = "1") int page,
-                              @RequestParam(value = "size" ,defaultValue = "10") int size,
-                              ModelMap modelMap, HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute("user");
-        logger.info("session: {}",user);
-        PageHelper.startPage(page,size);
-        modelMap.addAttribute("user",user);
-        modelMap.addAttribute("applies",new PageInfo<>(applyService.applyStatus(user.getUserId())));
-        return "/secretary/applyStatus";
-    }
-
-    @ResponseBody
-    @GetMapping("applyItems/{id}")
-    public JsonData applyItems(@PathVariable("id") Integer id, HttpSession httpSession) {
-        return  new JsonData(0,applyService.getItemsByApplyId(id),"ok");
-
+    @RequestMapping("/me")
+    public String test() {
+        return "/auditor/me";
     }
 }
