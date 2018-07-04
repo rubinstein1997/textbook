@@ -47,17 +47,25 @@ public class SecretaryController {
     private StringRedisTemplate redisTpl;
 
     @RequestMapping("main")
-    public String main() {
+    public String main(@AuthenticationPrincipal UserDetails userDetail,
+                       ModelMap modelMap) {
+        modelMap.addAttribute("user", userService.selectById(userDetail.getUsername()));
+
         return "/secretary/main";
     }
 
     @RequestMapping(value = "manualApply", method = RequestMethod.GET)
-    public String manualApply() {
+    public String manualApply(@AuthenticationPrincipal UserDetails userDetail,
+                              ModelMap modelMap) {
+        modelMap.addAttribute("user", userService.selectById(userDetail.getUsername()));
+
         return "/secretary/manualApply";
     }
 
     @RequestMapping(value = "excelApply", method = RequestMethod.GET)
-    public String excelApply() {
+    public String excelApply(@AuthenticationPrincipal UserDetails userDetail,
+                             ModelMap modelMap) {
+        modelMap.addAttribute("user", userService.selectById(userDetail.getUsername()));
         return "/secretary/excelApply";
     }
 
@@ -75,7 +83,8 @@ public class SecretaryController {
     }
 
     @RequestMapping(value = "excelApplyPost")
-    public String excelApplyPost(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal UserDetails userDetail)
+    public String excelApplyPost(@RequestParam("file") MultipartFile file,
+                                 @AuthenticationPrincipal UserDetails userDetail)
             throws IOException {
 
         String userName = userDetail.getUsername();

@@ -38,4 +38,9 @@ public class AuditorController {
     public String test() {
         return "/auditor/me";
     }
+
+    @RequestMapping("/main")
+    public String main() {
+        return "/auditor/main";
+    }
 }
